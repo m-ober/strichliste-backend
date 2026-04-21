@@ -32,7 +32,7 @@ jobs:
         run: |
           VERSION=${{ steps.tag.outputs.SOURCE_TAG }}
           VERSION=${VERSION#v}
-          jq --arg v "$VERSION" '.version = $v' composer.json > composer.json.tmp
+          jq --arg v "$VERSION" '{version: $v} + .' composer.json > composer.json.tmp
           mv composer.json.tmp composer.json
 
       - name: Sync composer.lock
@@ -63,7 +63,7 @@ jobs:
         run: |
           sudo cp .env.dist .env
           sudo rm -rf var/cache/*
-          tar -czf strichliste-backend-${{ steps.tag.outputs.SOURCE_TAG }}.tar.gz .env *
+          tar -czf strichliste-backend.tar.gz .env *
 
       - name: Create Release and Upload Artifact
         uses: softprops/action-gh-release@v2
@@ -72,4 +72,4 @@ jobs:
           prerelease: false
           name: Release ${{ steps.tag.outputs.SOURCE_TAG }}
           tag_name: ${{ steps.tag.outputs.SOURCE_TAG }}
-          files: build/strichliste-backend-${{ steps.tag.outputs.SOURCE_TAG }}.tar.gz
+          files: build/strichliste-backend.tar.gz
