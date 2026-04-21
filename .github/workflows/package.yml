@@ -40,7 +40,7 @@ jobs:
         with:
           php_version: ${{ env.PHP_VERSION }}
           command: update
-          args: --lock --no-install
+          args: --lock --no-install --no-scripts
           working_dir: build
           php_extensions: pdo_sqlite pdo_mysql
 
