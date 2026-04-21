@@ -28,6 +28,12 @@ jobs:
         id: tag
         run: echo "SOURCE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: /tmp/composer-cache
+          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+
       - name: Set version in composer.json
         run: |
           VERSION=${{ steps.tag.outputs.SOURCE_TAG }}
@@ -43,12 +49,6 @@ jobs:
           args: --lock --no-install --no-scripts
           working_dir: build
           php_extensions: pdo_sqlite pdo_mysql
-
-      - name: Cache Composer dependencies
-        uses: actions/cache@v4
-        with:
-          path: /tmp/composer-cache
-          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
       - name: Build
         uses: php-actions/composer@v6
