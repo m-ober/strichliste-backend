@@ -29,7 +29,7 @@ jobs:
       mariadb:
         image: mariadb:11.8
         env:
-          MARIADB_DATABASE: strichliste
+          MARIADB_DATABASE: strichliste_test
           MARIADB_USER: strichliste
           MARIADB_PASSWORD: strichliste
           MARIADB_ROOT_PASSWORD: root
@@ -41,7 +41,7 @@ jobs:
       postgres:
         image: postgres:17
         env:
-          POSTGRES_DB: strichliste
+          POSTGRES_DB: strichliste_test
           POSTGRES_USER: strichliste
           POSTGRES_PASSWORD: strichliste
         ports: ["5432:5432"]
